@@ -149,15 +149,18 @@ void jogo_pergunta_resposta(void) {
 #define NUM_CAIXAS 5
 typedef enum { VAZIA, BOTAO, COBRA } Conteudo;
 
+#define NUM_NOMES 7
+const char *nomes_disponiveis[NUM_NOMES] = {
+    "Carlos", "Ana", "Pedro", "Maria", "Joao", "Lucas", "Sofia"
+};
+
 void jogo_cobra_caixa(void) {
-    char nome1[50], nome2[50];
+    char *nomes[2];
     int caixas_abertas[NUM_CAIXAS];
     Conteudo conteudo[NUM_CAIXAS];
-    int turno;       /* 0 = jogador 1, 1 = jogador 2 */
-    int jogadores[2]; /* indices: quem e o jogador 0 e 1 */
-    char *nomes[2];
-    int escolha;
-    int i, achou;
+    int turno;
+    int escolha1, escolha2;
+    int escolha, i, achou;
 
     printf("\n=== COBRA NA CAIXA! ===\n");
     printf("Ha 5 caixas fechadas. Entre elas:\n");
@@ -165,19 +168,25 @@ void jogo_cobra_caixa(void) {
     printf("  1 COBRA (derrota instantanea)\n");
     printf("  3 CAIXAS VAZIAS\n\n");
 
-    printf("Nome do Jogador 1: ");
-    fgets(nome1, sizeof(nome1), stdin);
-    nome1[strcspn(nome1, "\n")] = 0;
+    printf("Lista de nomes disponiveis:\n");
+    for (i = 0; i < NUM_NOMES; i++)
+        printf("  [%d] %s\n", i + 1, nomes_disponiveis[i]);
 
-    printf("Nome do Jogador 2: ");
-    fgets(nome2, sizeof(nome2), stdin);
-    nome2[strcspn(nome2, "\n")] = 0;
+    printf("\nJogador 1, escolha seu nome (1-7): ");
+    escolha1 = ler_inteiro(1, NUM_NOMES);
+    nomes[0] = (char *)nomes_disponiveis[escolha1 - 1];
 
-    nomes[0] = nome1;
-    nomes[1] = nome2;
+    printf("Jogador 2, escolha seu nome (1-7): ");
+    escolha2 = ler_inteiro(1, NUM_NOMES);
+    while (escolha2 == escolha1) {
+        printf("Esse nome ja foi escolhido! Escolha outro (1-7): ");
+        escolha2 = ler_inteiro(1, NUM_NOMES);
+    }
+    nomes[1] = (char *)nomes_disponiveis[escolha2 - 1];
+
+    printf("\nJogadores: %s vs %s\n", nomes[0], nomes[1]);
 
     /* Sorteio de quem comeca */
-    srand((unsigned int)time(NULL));
     turno = rand() % 2;
     printf("\nSorteio: %s comeca!\n", nomes[turno]);
 
