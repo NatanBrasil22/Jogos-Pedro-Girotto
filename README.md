@@ -30,7 +30,7 @@ Este projeto foi desenvolvido com o auxilio do **Claude Code** da Anthropic (htt
 
 ## Divisao das Contribuicoes
 
-### O que o aluno fez
+### O que os alunos fizeram
 
 - Definicao completa das regras, mecanicas e requisitos de cada um dos 3 jogos.
 - Elaboracao do documento de especificacao (PDF) detalhando comportamento esperado de cada jogo.
